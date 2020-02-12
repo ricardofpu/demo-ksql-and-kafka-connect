@@ -22,17 +22,20 @@ topics=person
 connection.url=jdbc:postgresql://localhost:5432/test_connect
 connection.user=test_connect
 connection.password=test_connect
+table.name.format=table_${topic}
 auto.create=true
 ```
 
 The first few settings are common settings for all connectors, except for `topics` which is specific to sink connectors like this one. The `connection.url`, `connection.user` and `connection.password` specifies the database configurations that will be used in connection.
+
+Use `table.name.format` setting to format the destination table name. Default value is ${topic} as a placeholder for the originating topic name.
 
  If `auto.create` is enabled, the connector can create the destination table if it not exists.
 
 
 ### Commands
 
-We will use confluent API to setup our Postgres Sink connector. This example assumes you are running Kafka and Schema Registry locally on the default ports.
+> This example assumes you are running Kafka and Schema Registry locally on the default ports.
 
 1. Start up Confluent Platform
 
@@ -78,6 +81,7 @@ curl --location --request POST 'http://localhost:8083/connectors' \
         "connection.url": "jdbc:postgresql://localhost:5432/test_connect",
         "connection.user": "test_connect",
         "connection.password": "test_connect",
+        "table.name.format": "table_${topic}",
         "auto.create": true
     }
 }'
@@ -103,7 +107,7 @@ kafka-avro-console-producer \
 After previous command, console wait any entries like that:
 
 ```json
-{"id": 1, "full_name": "test"}
+{"id": 30, "full_name": "test"}
 ```
 
 5. Execute select in postgres
@@ -124,6 +128,4 @@ Results:
 * [Confluent Platform](https://docs.confluent.io/current/quickstart/ce-quickstart.html#ce-quickstart)
 * [JDBC Sink Connect](https://docs.confluent.io/3.2.2/connect/connect-jdbc/docs/sink_connector.html#quickstart)
 * [Kafka Connect REST Interface](https://docs.confluent.io/current/connect/references/restapi.html)
-
-
 

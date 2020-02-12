@@ -18,7 +18,7 @@ Let's see a configuration file for the connector with following settings:
 name=postgres-sink
 connector.class=io.confluent.connect.jdbc.JdbcSinkConnector
 tasks.max=1
-topics=nickname
+topics=person
 connection.url=jdbc:postgresql://localhost:5432/test_connect
 connection.user=test_connect
 connection.password=test_connect
@@ -74,7 +74,7 @@ curl --location --request POST 'http://localhost:8083/connectors' \
     "config": {
         "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
         "tasks.max": "1",
-        "topics": "nickname",
+        "topics": "person",
         "connection.url": "jdbc:postgresql://localhost:5432/test_connect",
         "connection.user": "test_connect",
         "connection.password": "test_connect",
@@ -92,31 +92,31 @@ Message Payload
 ```json
 {
     "id": 1,
-    "nickname": "test"
+    "full_name": "test"
 }
 ```
 
 ```shell
 kafka-avro-console-producer \
  --broker-list localhost:9092 --topic nickname \
- --property value.schema='{"type":"record","name":"myrecor","fields":[{"name":"id","type":"int"},{"name":"nickname","type":"string"}]}'
+ --property value.schema='{"type":"record","name":"person","fields":[{"name":"id","type":"int"},{"name":"full_name","type":"string"}]}'
 ```
 
 After previous command, console wait any entries like that:
 
 ```json
-{"id": 1, "nickname": "test"}
+{"id": 1, "full_name": "test"}
 ```
 
 5. Execute select in postgres
 
 ```sql
-select * from nickname;
+select * from person;
 ```
 
 Results:
 
-| id       |      nickname | 
+| id       |     full_name | 
 |----------|:-------------:|
 | 1        |  test         |
 

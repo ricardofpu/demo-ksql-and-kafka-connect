@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "13b9e07b-cfeb-424d-b0c9-2bee7f69d476",
+		"name": "confluent-connector",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Connector",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"postgres-sink\",\n    \"config\": {\n        \"connector.class\": \"io.confluent.connect.jdbc.JdbcSinkConnector\",\n        \"tasks.max\": \"1\",\n        \"topics\": \"nickname\",\n        \"connection.url\": \"jdbc:postgresql://localhost:5432/test_connect\",\n        \"connection.user\": \"test_connect\",\n        \"connection.password\": \"test_connect\",\n        \"auto.create\": true\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Connector",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"connector.class\": \"io.confluent.connect.jdbc.JdbcSinkConnector\",\n\t\"tasks.max\": \"1\",\n\t\"topics\": \"nickname\",\n\t\"connection.url\": \"jdbc:postgresql://localhost:5432/test_connect\",\n\t\"connection.user\": \"test_connect\",\n\t\"connection.password\": \"test_connect\",\n\t\"auto.create\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/postgres-sink/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"postgres-sink",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Connector",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8083/connectors/postgres-sink",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"postgres-sink"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Connector",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"nickname\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhosT:8083/connectors/postgres-sink",
+					"protocol": "http",
+					"host": [
+						"localhosT"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"postgres-sink"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

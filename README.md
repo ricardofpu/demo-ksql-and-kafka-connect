@@ -66,7 +66,7 @@ docker-compose up
 
 3. Create JDBC PostgreSQL sink Connector using Kafka Connect REST Interface
 
-```
+```console
 curl --location --request PUT 'http://localhost:8083/connectors/postgres-sink/config' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -93,7 +93,7 @@ Message Payload
 }
 ```
 
-```
+```console
 kafka-avro-console-producer \
  --broker-list localhost:9092 --topic nickname \
  --property value.schema='{"type":"record","name":"myrecor","fields":[{"name":"id","type":"int"},{"name":"nickname","type":"string"}]}'

@@ -1,0 +1,12 @@
+{
+    "name": "postgres-sink",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "topics": "nickname",
+        "connection.url": "jdbc:postgresql://localhost:5432/test_connect",
+        "connection.user": "test_connect",
+        "connection.password": "test_connect",
+        "auto.create": true
+    }
+}

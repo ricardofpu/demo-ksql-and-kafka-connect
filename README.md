@@ -98,7 +98,7 @@ Message Payload
 
 ```shell
 kafka-avro-console-producer \
- --broker-list localhost:9092 --topic nickname \
+ --broker-list localhost:9092 --topic person \
  --property value.schema='{"type":"record","name":"person","fields":[{"name":"id","type":"int"},{"name":"full_name","type":"string"}]}'
 ```
 

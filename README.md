@@ -12,7 +12,7 @@ This quickstart example let's show how to use confluent JDBC sink Connect to exp
 
 To see the basic functionality of the connector, we’ll be copying data from a single topic to a local PostgreSQL database.
 
-Let's create a configuration file for the connector with following settings:
+Let's see a configuration file for the connector with following settings:
 
 ```properties
 name=postgres-sink
@@ -25,7 +25,7 @@ connection.password=test_connect
 auto.create=true
 ```
 
-The first few settings are common settings for all connectors, except for `topics` which is specific to sink connectors like this one. The `connection.url` specifies the database that will be used in connection. If `auto.create` is enabled, the connector can create the destination table if it not exists.
+The first few settings are common settings for all connectors, except for `topics` which is specific to sink connectors like this one. The `connection.url`, `connection.user` and `connection.password` specifies the database configurations that will be used in connection. If `auto.create` is enabled, the connector can create the destination table if it not exists.
 
 
 ## Confluent connector
@@ -67,22 +67,25 @@ docker-compose up
 3. Create JDBC PostgreSQL sink Connector using Kafka Connect REST Interface
 
 ```shell
-curl --location --request PUT 'http://localhost:8083/connectors/postgres-sink/config' \
+curl --location --request POST 'http://localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-	"connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-	"tasks.max": "1",
-	"topics": "nickname",
-	"connection.url": "jdbc:postgresql://localhost:5432/test_connect",
-	"connection.user": "test_connect",
-	"connection.password": "test_connect",
-	"auto.create": true
+    "name": "postgres-sink",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "topics": "nickname",
+        "connection.url": "jdbc:postgresql://localhost:5432/test_connect",
+        "connection.user": "test_connect",
+        "connection.password": "test_connect",
+        "auto.create": true
+    }
 }'
 ```
 > Reference: https://docs.confluent.io/current/connect/references/restapi.html
 
 
-4. Sending messages to a topic (`nickname`)
+4. Sending messages to a topic
 
 Message Payload
 
